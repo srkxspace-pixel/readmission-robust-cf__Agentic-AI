@@ -1,0 +1,32 @@
+# M2 model multiplicity set (DESIGN D4). Hyperparameters picked once from a small grid on a 15% validation
+# split of TRAIN (test untouched), so no family is handicapped: val AUC xgb 0.657, logreg 0.657, mlp 0.661.
+seeds: [0, 1, 2, 3, 4]
+bootstrap: true        # seed s trains on its own bootstrap resample of train (decided M2)
+flag_rate: 0.35        # every model flags the top 35% of training-set scores as high-risk (decided M2)
+
+band:
+  primary: 0.02        # keep models with test AUC >= best - 0.02 (decided M0)
+  sensitivity: 0.01
+
+xgb:
+  n_estimators: 400
+  max_depth: 3
+  learning_rate: 0.03
+  min_child_weight: 10
+  subsample: 0.8       # < 1 so the seed changes the model
+  colsample_bytree: 0.8
+
+logreg:
+  C: 0.01
+  max_iter: 2000
+
+mlp:                   # PyTorch, CPU only; last layer is linear (needed by ElliCE)
+  hidden: [32]         # [64, 32] without dropout overfit (val AUC peaked at epoch 2, then fell to 0.618)
+  dropout: 0.2
+  epochs: 10
+  batch_size: 512
+  lr: 0.0005
+  weight_decay: 0.001
+
+# E2 thesis replication: XGBoost, identical data, seed only (no bootstrap).
+replication_family: xgb

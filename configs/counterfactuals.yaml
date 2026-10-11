@@ -1,0 +1,26 @@
+# M4/M5 counterfactual generation (DESIGN D5, D7).
+cohort:
+  coverage_n: 300      # random patients flagged high-risk by ALL band models (unscreened)
+  seed: 7              # stability cohort = ALL flagged patients with recourse under every band model (grid check)
+
+replication:           # E2: thesis rule (true positive on all 5 seed-only XGBoost, first 50 with full DiCE output)
+  n: 50
+  seed: 7
+
+dice:
+  method: random
+  total_cfs: 3
+  seed: 0
+  noise_floor_seed: 1  # same models, second DiCE seed: how much DiCE disagrees with itself
+
+consensus:
+  pool_cfs: 10         # DiCE candidates per (patient, source) to filter
+  pool_seed: 2
+  tau: 0.8             # main (decided M4)
+  tau_grid: [0.6, 0.8, 1.0]
+
+ellice:
+  eps: 0.0001          # decided M5: the only grid value where ElliCE finds robust CFs at all
+  eps_curve: [0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03]   # coverage-vs-eps result (stability cohort)
+
+n_jobs: 4              # CPU worker processes

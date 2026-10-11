@@ -1,0 +1,126 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}}
+
+\begin{document}
+
+\title{Do Robust Counterfactuals Survive Model Multiplicity in 30-Day Readmission Prediction? DiCE vs.\ Consensus and Rashomon-Robust Counterfactuals Across Heterogeneous Model Families}
+
+\author{\IEEEauthorblockN{Srikar [SURNAME]}
+\IEEEauthorblockA{[Department], [Institution]\\
+[City], [Country]}}
+
+\maketitle
+
+\begin{abstract}
+%%ABSTRACT%%
+\end{abstract}
+
+\begin{IEEEkeywords}
+counterfactual explanations, algorithmic recourse, model multiplicity, Rashomon set, hospital readmission, explainable AI
+\end{IEEEkeywords}
+
+\section{Introduction}
+Counterfactual explanations (CFs) tell a user how an input would have to change for a model to give a different
+prediction \cite{wachter2018}. In hospital readmission prediction, a CF for a patient flagged as high-risk reads like a
+recommendation: \emph{had these care-process variables been different, the model would not have flagged this
+patient}. Such recommendations are only meaningful if they describe the prediction task rather than one particular
+trained model. In practice, many models reach almost the same accuracy but make different individual predictions
+(\emph{predictive multiplicity} \cite{marx2020multiplicity}), and a CF that flips one of them may not flip another
+\cite{pawelczyk2020multiplicity,black2022consistent}.
+
+A recent thesis \cite{emekci2026} measured this on the Diabetes 130-US readmission data \cite{strack2014}: five XGBoost
+models differing only in their random seed, DiCE \cite{mothilal2020dice} counterfactuals restricted to four
+care-process features, and four stability metrics. It reported a cross-model validity of 0.65 and a feature-set
+consistency of 0.51, and named other model families, robustness-aware generation and consensus counterfactuals as
+future work. Robust CF methods that target validity under model change already exist
+\cite{upadhyay2021roar,dutta2022robx,hamman2023,jiang2024argumentative,turbal2025ellice}, and recent benchmarks show
+that their robustness depends on the kind of model change \cite{kostrzewa2026which,tan2026densityflow}. However,
+these benchmarks report validity and cost only: none asks whether equally good models \emph{agree on what to
+recommend}, none constrains CFs to actionable features of a clinical task, and none tests transfer across
+heterogeneous model families.
+
+This paper fills that gap with a measurement study (no new CF algorithm is proposed). We ask:
+\textbf{RQ1} Does the thesis's finding hold when equally accurate models come from different families (XGBoost,
+logistic regression, MLP)? \textbf{RQ2} Do consensus and Rashomon-robust (ElliCE) CFs achieve higher cross-model
+validity and higher agreement on the recommended features? \textbf{RQ3} What do they cost in proximity, sparsity and
+plausibility? \textbf{RQ4} Which actionable features are recommended consistently?
+Our contributions are: (i)~a leak-free replication of the thesis setting; (ii)~evidence that, under multiplicity,
+whether a high-risk patient has any actionable recourse at all depends on which equally accurate model is deployed;
+(iii)~a like-for-like comparison of DiCE, a consensus filter and ElliCE on the four thesis metrics plus quality
+metrics, both in-sample and on a held-out model family; (iv)~open, CPU-only code where every reported number is
+generated from versioned result files.
+
+\section{Related Work}
+\textbf{Counterfactuals and recourse.} CFs \cite{wachter2018} and diverse CFs (DiCE) \cite{mothilal2020dice} are
+widely used for tabular models; recourse work adds actionability and asks whether a feasible change exists at all
+\cite{ustun2019recourse}.
+\textbf{Multiplicity and robust CFs.} Predictive multiplicity \cite{marx2020multiplicity} makes CFs fragile
+\cite{pawelczyk2020multiplicity,black2022consistent}. Robust generators target validity under parameter shifts
+(ROAR \cite{upadhyay2021roar}), for tree ensembles (RobX \cite{dutta2022robx}), with probabilistic guarantees
+\cite{hamman2023}, or over a Hessian-ellipsoid approximation of the Rashomon set of linear models and MLP last layers
+(ElliCE \cite{turbal2025ellice}); see \cite{jiang2024survey} for a survey.
+\textbf{Agreement across models.} Ensemble-consistent CFs \cite{artelt2022ensemble}, entropic-risk CFs with a tunable
+share of models that must accept the CF \cite{noorani2025entropic}, probabilistic consensus \cite{kostrzewa2026croce}
+and argumentative ensembling \cite{jiang2024argumentative,jiang2025argumentative} all seek a CF accepted by many models;
+our consensus method is a simple baseline from this family, not a contribution.
+\textbf{Benchmarks.} \cite{kostrzewa2026which} evaluates six robust methods under eight model-change types (MLPs only);
+DensityFlow \cite{tan2026densityflow} measures validity across seven model families. Neither measures structural
+agreement (which features, direction, magnitude) or applies clinical actionability constraints.
+\textbf{Readmission.} Readmission models are typically ensembles \cite{yu2020readmission}; on Diabetes 130-US we found
+no CF study other than \cite{emekci2026}.
+
+\section{Methods}
+\subsection{Data and models}
+We use the UCI Diabetes 130-US data \cite{strack2014} (101,766 encounters), keep the first encounter per patient, drop
+encounters ending in death or hospice (discharge codes 11, 13, 14, 19--21), drop \texttt{weight},
+\texttt{payer\_code} and \texttt{medical\_specialty} (40--97\% missing), group ICD-9 codes into nine groups, and predict
+readmission within 30 days. The data are split 80/20 at the \emph{patient} level, stratified by outcome. Categorical
+features are one-hot encoded and numeric features standardised (132 inputs).
+We train XGBoost \cite{chen2016xgboost}, L2-regularised logistic regression (LR) and a one-hidden-layer MLP (PyTorch, CPU),
+five seeds each. Seed $s$ trains on its own bootstrap resample of the training set, because seed alone does not change a
+convex LR. Hyperparameters were chosen once on a validation split of the training data, all families use class
+weights, and each model's threshold is set so that it flags the same 35\% of patients as high-risk (the thesis's
+operating point), so a ``flip'' means the same on every model. Models within 0.02 AUC of the best form the
+multiplicity (Rashomon-style) set; 0.01 is a sensitivity analysis.
+
+\subsection{Actionable features and cohorts}
+As in the thesis, only four care-process variables may change: time in hospital, number of lab procedures, number of
+procedures and number of medications, each within its training 1st--99th percentile range; every other feature is
+immutable (verified by a test over all generated CFs). An exhaustive grid over these four features tells us, for every
+patient and model, whether \emph{any} counterfactual exists. The \textbf{coverage cohort} is 300 random test patients
+flagged by all band models; it measures how often recourse exists and how often each method finds it. The
+\textbf{stability cohort} contains every test patient flagged by all band models for whom recourse exists under every
+model, mirroring the thesis, which kept only patients for whom every model produced CFs.
+
+\subsection{Counterfactual methods}
+\textbf{DiCE} (random method) generates CFs on each source model. \textbf{Consensus} filters each source model's ten
+DiCE candidates, keeping those that at least $\tau$ of a committee of models also classify as low-risk ($\tau=0.8$;
+0.6 and 1.0 in the sensitivity analysis), and returns the closest. \textbf{ElliCE} \cite{turbal2025ellice} returns one
+CF per LR or MLP source that is valid for every model in an ellipsoidal approximation of the source's $\varepsilon$-Rashomon
+set. For the method comparison we keep the single closest valid CF per (patient, source) for every method, so that
+DiCE's deliberate diversity is not counted as instability; DiCE and consensus select from the same candidate pool, so they
+differ only in the agreement filter.
+
+\subsection{Metrics and protocol}
+We use the thesis's four metrics unchanged \cite{emekci2026}: \emph{cross-model validity} (share of evaluation models
+that classify the CF as low-risk), \emph{feature-set consistency} (Jaccard overlap of the changed features over CF pairs
+from different source models), \emph{direction consistency} (share of changes to a feature, made by CFs from at least two
+source models, that follow the dominant sign) and \emph{magnitude consistency} ($\max(0, 1-|\Delta_a-\Delta_b|)$ for
+same-direction pairs, with changes normalised by the feature's range). Quality metrics are proximity (range-normalised
+L1 change), sparsity (number of changed features), plausibility (distance to the nearest training patient that the source
+model predicts as low-risk) and coverage. Consensus and ElliCE use the models they are scored on, so we report two
+protocols: \emph{in-sample} (all band models) and \emph{leave-one-family-out} (LOFO): CFs are built from two families
+and validity is measured on the held-out family. All estimates are patient-level means with 95\% percentile bootstrap
+CIs (5,000 resamples); methods are compared with paired bootstrap differences on the same patients.
+
+%%RESULTS%%
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

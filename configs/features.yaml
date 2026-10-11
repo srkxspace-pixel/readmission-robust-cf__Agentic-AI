@@ -1,0 +1,13 @@
+# M3 actionable-feature constraints (DESIGN D3). Everything not listed as actionable is immutable.
+# ★ M3: show this list to the guide for a sanity check.
+
+# Main analysis: the thesis's 4 numeric "care-process" variables (decided M0).
+actionable: [time_in_hospital, num_lab_procedures, num_procedures, num_medications]
+
+# Allowed range per actionable feature = training 1st-99th percentile, rounded outward (as in the thesis).
+# Computed in code from data/processed/train.parquet; for this split: time [1,13], lab [1,85], proc [0,6], meds [3,44].
+range_quantiles: [0.01, 0.99]
+
+# E5 sensitivity only (DiCE): categorical treatment/test flags may change instead.
+# Only validity and feature-set consistency are reported (direction/magnitude undefined for nominal flags).
+actionable_categorical: [insulin, metformin, change, diabetesMed, A1Cresult, max_glu_serum]

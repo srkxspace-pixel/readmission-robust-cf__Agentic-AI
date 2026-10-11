@@ -1,0 +1,15 @@
+# Python 3.11. CPU only: all code passes device="cpu" explicitly. Pinned at M0 (2026-10-10).
+numpy==1.26.4
+pandas==2.1.4
+pyarrow==22.0.0
+scikit-learn==1.4.2
+xgboost==2.0.3
+torch==2.9.1
+dice-ml==0.12
+ellice==0.1.4
+scipy==1.16.2
+matplotlib==3.10.8
+pyyaml==6.0.2
+joblib==1.5.2
+pytest==9.1.1
+streamlit==1.64.0   # demo UI (src/rcf/app.py)

@@ -1,0 +1,28 @@
+{
+  "run_id": "eval",
+  "python": "3.11.9",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.4.2",
+    "xgboost": "2.0.3",
+    "torch": "2.9.1",
+    "dice-ml": "0.12",
+    "ellice": "0.1.4"
+  },
+  "configs_hash": {
+    "data": "0d11a7ca5d744fa079e1b8bea4bb8f75b2f3db224598ef4fae99a1711ee57852",
+    "models": "acc911fb4d0140820963c09358976c7e3a5553b234a6dec48576c1a680f5a168",
+    "features": "6fc22af0d897a2ba76bc69078c4eb8e1e78ebbd05513089c94f59c2a2d4420da",
+    "counterfactuals": "fad82c2030544c5e8aa56d4c1d509baee03eb10767917ef853fd943c21ef1d72"
+  },
+  "started": "2026-10-12T02:31:37",
+  "finished": "2026-10-12T02:32:33",
+  "cfs_manifest_hash": "cc97820c38890f4e004714f342478b444be25e85545c6ba4da096caa29718398",
+  "bootstrap_resamples": 5000,
+  "seed": 0,
+  "cohort_size": {
+    "stability": 150,
+    "coverage": 300
+  }
+}

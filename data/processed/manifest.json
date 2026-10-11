@@ -1,0 +1,31 @@
+{
+  "run_id": "data_prepare",
+  "python": "3.11.9",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.4.2",
+    "xgboost": "2.0.3",
+    "torch": "2.9.1",
+    "dice-ml": "0.12",
+    "ellice": "0.1.4"
+  },
+  "configs_hash": {
+    "data": "0d11a7ca5d744fa079e1b8bea4bb8f75b2f3db224598ef4fae99a1711ee57852"
+  },
+  "started": "2026-10-12T03:10:13",
+  "finished": "2026-10-12T03:10:24",
+  "data_hash": "0689e7ec031237dc63031b938805c48377748761a3b26acab621567afa24df97",
+  "seed": 42,
+  "rows": {
+    "raw": 101766,
+    "clean": 69970,
+    "train": 55976,
+    "test": 13994
+  },
+  "positive_rate": {
+    "train": 0.0897,
+    "test": 0.0897
+  },
+  "n_encoded_features": 132
+}

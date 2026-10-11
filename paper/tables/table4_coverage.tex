@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Coverage cohort (300 random high-risk patients, unscreened): share of (patient, model) pairs for which a counterfactual exists (exhaustive grid over the 4 actionable features) vs.\ is found.}
+\label{tab:coverage}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccc}
+\toprule
+Source models & Exists & DiCE & Consensus & ElliCE \\
+\midrule
+XGBoost & 0.76 & 0.70 & 0.04 & -- \\
+Logistic regression & 0.27 & 0.24 & 0.04 & 0.05 \\
+MLP & 0.43 & 0.32 & 0.04 & 0.18 \\
+All 15 & 0.49 & 0.42 & 0.04 & 0.11 \\
+Recourse under all 15 models & 0.06 & & & \\
+Recourse under $\geq$1 model & 0.93 & & & \\
+\bottomrule
+\end{tabular}
+\end{table}

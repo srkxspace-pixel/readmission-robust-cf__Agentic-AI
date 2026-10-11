@@ -1,0 +1,66 @@
+{
+  "run_id": "models_train",
+  "python": "3.11.9",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.4.2",
+    "xgboost": "2.0.3",
+    "torch": "2.9.1",
+    "dice-ml": "0.12",
+    "ellice": "0.1.4"
+  },
+  "configs_hash": {
+    "data": "0d11a7ca5d744fa079e1b8bea4bb8f75b2f3db224598ef4fae99a1711ee57852",
+    "models": "acc911fb4d0140820963c09358976c7e3a5553b234a6dec48576c1a680f5a168"
+  },
+  "started": "2026-10-12T03:02:58",
+  "finished": "2026-10-12T03:04:20",
+  "models": [
+    "xgb_s0",
+    "xgb_s1",
+    "xgb_s2",
+    "xgb_s3",
+    "xgb_s4",
+    "lr_s0",
+    "lr_s1",
+    "lr_s2",
+    "lr_s3",
+    "lr_s4",
+    "mlp_s0",
+    "mlp_s1",
+    "mlp_s2",
+    "mlp_s3",
+    "mlp_s4",
+    "xgbrep_s0",
+    "xgbrep_s1",
+    "xgbrep_s2",
+    "xgbrep_s3",
+    "xgbrep_s4"
+  ],
+  "best_auc": 0.6515,
+  "in_band_primary": [
+    "xgb_s0",
+    "xgb_s1",
+    "xgb_s2",
+    "xgb_s3",
+    "xgb_s4",
+    "lr_s0",
+    "lr_s1",
+    "lr_s2",
+    "lr_s3",
+    "lr_s4",
+    "mlp_s0",
+    "mlp_s1",
+    "mlp_s2",
+    "mlp_s3",
+    "mlp_s4"
+  ],
+  "seed": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ]
+}

@@ -1,0 +1,18 @@
+family,method,mean,se,lo,hi,n
+xgb,exists (grid upper bound),0.7627,0.0198,0.7227,0.8007,300
+xgb,DiCE,0.7013,0.0216,0.658,0.7427,300
+xgb,Consensus (tau=0.8),0.0353,0.0098,0.018,0.0553,300
+lr,exists (grid upper bound),0.2727,0.0193,0.232,0.3093,300
+lr,DiCE,0.2407,0.0186,0.2027,0.276,300
+lr,Consensus (tau=0.8),0.0373,0.0091,0.0207,0.056,300
+lr,ElliCE,0.0493,0.0075,0.0347,0.064,300
+mlp,exists (grid upper bound),0.4347,0.0214,0.3913,0.4753,300
+mlp,DiCE,0.3207,0.02,0.2793,0.3587,300
+mlp,Consensus (tau=0.8),0.04,0.0098,0.0227,0.06,300
+mlp,ElliCE,0.1753,0.0146,0.1467,0.204,300
+all,exists (grid upper bound),0.49,0.0178,0.4536,0.5233,300
+all,DiCE,0.4209,0.0176,0.3844,0.454,300
+all,Consensus (tau=0.8),0.0376,0.0092,0.0207,0.0562,300
+all,ElliCE,0.1123,0.0102,0.0923,0.1327,300
+all 15 at once,exists (grid upper bound),0.0567,0.0135,0.0333,0.0833,300
+at least 1 of 15,exists (grid upper bound),0.9267,0.0152,0.8967,0.9567,300

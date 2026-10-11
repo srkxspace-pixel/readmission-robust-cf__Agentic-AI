@@ -1,0 +1,3 @@
+protocol,rows,positive_rate,auc,patients_in_both_splits
+"ours: first encounter, patient-level split",69970,0.0897,0.6512,0
+"thesis-like: all encounters, encounter-level split",99340,0.1139,0.6761,6755

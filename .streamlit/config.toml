@@ -1,0 +1,15 @@
+# Demo UI settings (python -m streamlit run src/rcf/app.py)
+[browser]
+gatherUsageStats = false     # no telemetry
+
+[runner]
+magicEnabled = false
+
+[server]
+headless = true              # print the URL instead of auto-opening a browser
+port = 8501
+address = "localhost"      # only this laptop can open the demo (no network exposure)
+
+[theme]
+base = "light"
+primaryColor = "#2a78d6"

@@ -1,0 +1,62 @@
+{
+  "run_id": "cfs_full",
+  "python": "3.11.9",
+  "packages": {
+    "numpy": "1.26.4",
+    "pandas": "2.1.4",
+    "scikit-learn": "1.4.2",
+    "xgboost": "2.0.3",
+    "torch": "2.9.1",
+    "dice-ml": "0.12",
+    "ellice": "0.1.4"
+  },
+  "configs_hash": {
+    "data": "de7c1adbeed458eb262114438e749254cf01b3f6b3ba104d3ea71676c4a56a27",
+    "models": "acc911fb4d0140820963c09358976c7e3a5553b234a6dec48576c1a680f5a168",
+    "features": "6fc22af0d897a2ba76bc69078c4eb8e1e78ebbd05513089c94f59c2a2d4420da",
+    "counterfactuals": "fad82c2030544c5e8aa56d4c1d509baee03eb10767917ef853fd943c21ef1d72"
+  },
+  "started": "2026-10-11T23:48:57",
+  "finished": "2026-10-12T01:26:25",
+  "models": [
+    "xgb_s0",
+    "xgb_s1",
+    "xgb_s2",
+    "xgb_s3",
+    "xgb_s4",
+    "lr_s0",
+    "lr_s1",
+    "lr_s2",
+    "lr_s3",
+    "lr_s4",
+    "mlp_s0",
+    "mlp_s1",
+    "mlp_s2",
+    "mlp_s3",
+    "mlp_s4"
+  ],
+  "cohort_size": {
+    "stability": 150,
+    "coverage": 300
+  },
+  "ranges": {
+    "time_in_hospital": [
+      1,
+      13
+    ],
+    "num_lab_procedures": [
+      1,
+      85
+    ],
+    "num_procedures": [
+      0,
+      6
+    ],
+    "num_medications": [
+      3,
+      44
+    ]
+  },
+  "ellice_eps": 0.0001,
+  "seed": 7
+}

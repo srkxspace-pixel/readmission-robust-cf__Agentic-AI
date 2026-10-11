@@ -1,0 +1,5 @@
+setting,metric,mean,se,lo,hi,n,unit_mean,n_units,thesis_mean,thesis_lo,thesis_hi,thesis_unit_mean,share_cfs_valid_on_all
+ours (seed-only XGBoost x5),cross_model_validity,0.7253,0.0173,0.6915,0.7592,50,0.7253,750,0.6475,0.6059,0.6869,0.6475,0.3733
+ours (seed-only XGBoost x5),feature_set_consistency,0.575,0.0204,0.5358,0.6158,50,0.575,4500,0.5134,0.4846,0.5443,0.5134,0.3733
+ours (seed-only XGBoost x5),direction_consistency,0.8153,0.0134,0.7883,0.8402,50,0.8168,169,0.8063,0.7852,0.8265,0.8094,0.3733
+ours (seed-only XGBoost x5),magnitude_consistency,0.8608,0.011,0.8393,0.8816,50,0.9012,4099,0.845,0.8288,0.8599,0.8755,0.3733

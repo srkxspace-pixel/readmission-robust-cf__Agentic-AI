@@ -1,0 +1,22 @@
+setting,sources,metric,mean,se,lo,hi,n,unit_mean,n_units
+xgb only,5,cross_model_validity,0.5334,0.0096,0.5146,0.5522,150,0.5352,2227
+xgb only,5,feature_set_consistency,0.4479,0.0063,0.4358,0.4605,150,0.4473,13230
+xgb only,5,direction_consistency,0.7855,0.0061,0.7738,0.7978,150,0.7876,544
+xgb only,5,magnitude_consistency,0.8236,0.0049,0.8139,0.8332,150,0.8381,8835
+lr only,5,cross_model_validity,0.5151,0.0096,0.4958,0.5338,150,0.5281,2035
+lr only,5,feature_set_consistency,0.4488,0.0079,0.4338,0.4647,150,0.4517,11095
+lr only,5,direction_consistency,0.911,0.0058,0.8994,0.9221,150,0.91,556
+lr only,5,magnitude_consistency,0.8113,0.0047,0.802,0.8206,150,0.8287,11631
+mlp only,5,cross_model_validity,0.5238,0.0082,0.5076,0.5397,150,0.5259,2163
+mlp only,5,feature_set_consistency,0.4298,0.0062,0.4177,0.4419,150,0.429,12462
+mlp only,5,direction_consistency,0.8951,0.0048,0.8856,0.9044,150,0.8953,584
+mlp only,5,magnitude_consistency,0.827,0.0046,0.8181,0.8359,150,0.8274,11729
+all 3 families,15,cross_model_validity,0.4192,0.0086,0.4024,0.436,150,0.4226,6425
+all 3 families,15,feature_set_consistency,0.4318,0.0039,0.4241,0.4396,150,0.4304,128553
+all 3 families,15,direction_consistency,0.8364,0.0041,0.8281,0.8444,150,0.8364,600
+all 3 families,15,magnitude_consistency,0.8198,0.0029,0.8142,0.8254,150,0.8281,108926
+all 3 families: within-family pairs,15,feature_set_consistency,0.4444,0.0048,0.4353,0.4538,150,0.4424,36787
+all 3 families: cross-family pairs,15,feature_set_consistency,0.4266,0.004,0.419,0.4346,150,0.4256,91766
+"noise floor: same model, 2 DiCE seeds",2,feature_set_consistency,0.5702,0.006,0.5585,0.5821,150,0.5653,19168
+"noise floor: same model, 2 DiCE seeds",2,direction_consistency,0.9166,0.0026,0.9114,0.9216,150,0.9153,5582
+"noise floor: same model, 2 DiCE seeds",2,magnitude_consistency,0.855,0.0025,0.8502,0.8601,150,0.8707,22857

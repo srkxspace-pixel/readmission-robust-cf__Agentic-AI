@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{Cohort and model-set statistics.}
+\label{tab:data}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lr}
+\toprule
+Quantity & Value \\
+\midrule
+Encounters (raw) & 101766 \\
+Patients after cleaning & 69970 \\
+Train / test patients & 55976 / 13994 \\
+30-day readmission rate & 0.090 \\
+Encoded features & 132 \\
+Models in AUC band ($\pm$0.02) & 15 \\
+Flag disagreement, same / different family & 0.102 / 0.112 \\
+Test patients flagged by some but not all models & 0.321 \\
+Test patients flagged by all 15 models & 2773 \\
+Stability cohort / coverage cohort & 150 / 300 \\
+E2 replication: screened / kept & 88 / 50 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Test performance of the 15 models (5 bootstrap seeds per family; AUPRC and Brier averaged over seeds). Base rate 0.090.}
+\label{tab:models}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccc}
+\toprule
+Family & AUC range & AUPRC & Brier & $\pm$0.02 & $\pm$0.01 \\
+\midrule
+XGBoost & 0.647--0.651 & 0.173 & 0.222 & 5/5 & 5/5 \\
+Logistic regression & 0.640--0.646 & 0.161 & 0.229 & 5/5 & 2/5 \\
+MLP & 0.645--0.649 & 0.166 & 0.231 & 5/5 & 5/5 \\
+\bottomrule
+\end{tabular}
+\end{table}
