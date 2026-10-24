@@ -11,7 +11,7 @@ import torch
 
 from rcf.utils import load_config
 
-DEVICE = "cpu"  # CLAUDE.md §2
+DEVICE = "cpu"  # CPU only, by design
 
 
 def actionable_ranges(train, features):

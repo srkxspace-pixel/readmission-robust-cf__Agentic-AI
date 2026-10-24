@@ -1,4 +1,4 @@
-"""M6: E1-E6 result tables from results/cfs/ -> results/eval/*.csv (every paper number comes from here).
+"""Step 4: E1-E6 result tables from results/cfs/ -> results/eval/*.csv (every paper number comes from here).
 
 Run: python -m rcf.metrics.evaluate
 """

@@ -1,4 +1,4 @@
-# M1 data preparation (DESIGN D2). Source: UCI id 296, CC BY 4.0, DOI 10.24432/C5230J.
+# Data preparation (docs/DESIGN.md D2). Source: UCI id 296, CC BY 4.0, DOI 10.24432/C5230J.
 raw_url: https://archive.ics.uci.edu/static/public/296/diabetes+130-us+hospitals+for+years+1999-2008.zip
 raw_csv: data/raw/diabetic_data.csv   # downloaded + unzipped from raw_url if missing
 processed_dir: data/processed

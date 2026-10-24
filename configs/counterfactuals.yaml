@@ -1,4 +1,4 @@
-# M4/M5 counterfactual generation (DESIGN D5, D7).
+# Counterfactual generation (docs/DESIGN.md D5, D7).
 cohort:
   coverage_n: 300      # random patients flagged high-risk by ALL band models (unscreened)
   seed: 7              # stability cohort = ALL flagged patients with recourse under every band model (grid check)
@@ -16,11 +16,11 @@ dice:
 consensus:
   pool_cfs: 10         # DiCE candidates per (patient, source) to filter
   pool_seed: 2
-  tau: 0.8             # main (decided M4)
+  tau: 0.8             # main setting
   tau_grid: [0.6, 0.8, 1.0]
 
 ellice:
-  eps: 0.0001          # decided M5: the only grid value where ElliCE finds robust CFs at all
+  eps: 0.0001          # the only tested value where ElliCE finds robust CFs at all (DESIGN D5)
   eps_curve: [0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03]   # coverage-vs-eps result (stability cohort)
 
 n_jobs: 4              # CPU worker processes

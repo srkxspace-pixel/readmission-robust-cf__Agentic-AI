@@ -1,7 +1,7 @@
-"""M5: build the cohorts and generate every counterfactual set on CPU. Resumable: finished stages are skipped.
+"""Step 3: build the cohorts and generate every counterfactual set on CPU. Resumable: finished stages are skipped.
 
 Run: python -m rcf.counterfactuals.run [--small]   ->  results/cfs/*.parquet, cohort.csv, manifest.json
---small: 4 patients per cohort, 1 model per family, written to results/cfs_small/ (M4 check).
+--small: 4 patients per cohort, 1 model per family, written to results/cfs_small/ (quick check).
 """
 import os
 

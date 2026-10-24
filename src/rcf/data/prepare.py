@@ -1,4 +1,4 @@
-"""M1: clean Diabetes 130-US, keep one encounter per patient, patient-level stratified split, fit encoder.
+"""Step 1: clean Diabetes 130-US, keep one encounter per patient, patient-level stratified split, fit encoder.
 
 Run: python -m rcf.data.prepare  ->  data/processed/{train,test}.parquet, encoder.joblib, manifest.json
 """

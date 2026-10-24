@@ -1,4 +1,4 @@
-"""M2: train 3 families x 5 seeds (+ 5 seed-only XGBoost for the E2 replication), fold in the
+"""Step 2: train 3 families x 5 seeds (+ 5 seed-only XGBoost for the E2 replication), fold in the
 equal-flag-rate threshold, evaluate on test and mark the accuracy band (DESIGN D4).
 
 Run: python -m rcf.models.train  ->  results/models/<id>.joblib, results/eval/models.csv, manifest.json
@@ -16,7 +16,7 @@ from xgboost import XGBClassifier
 from rcf.data.prepare import feature_columns
 from rcf.utils import ROOT, load_config, now, write_manifest
 
-DEVICE = "cpu"  # CLAUDE.md §2: never use the GPU
+DEVICE = "cpu"  # CPU only, by design: the GPU is never used
 MODELS_DIR = ROOT / "results" / "models"
 PROC = ROOT / "data" / "processed"
 

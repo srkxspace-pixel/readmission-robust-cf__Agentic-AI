@@ -1,5 +1,5 @@
 """Paper tables (LaTeX, IEEEtran + booktabs) generated from results/eval/*.csv only, so every number in
-paper/ traces to a results file (CLAUDE.md §4).
+paper/ traces to a results file.
 
 Run: python -m rcf.reporting.tables  ->  paper/tables/*.tex
 """
@@ -49,7 +49,7 @@ def t_dataset():
 
 
 def t_models():
-    m = pd.read_csv(ROOT / "results" / "eval" / "models.csv")  # written by M2
+    m = pd.read_csv(ROOT / "results" / "eval" / "models.csv")  # written by step 2 (model training)
     m = m[m.group == "main"]
     body = []
     for fam, name in [("xgb", "XGBoost"), ("lr", "Logistic regression"), ("mlp", "MLP")]:

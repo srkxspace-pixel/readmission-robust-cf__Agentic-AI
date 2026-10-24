@@ -1,4 +1,4 @@
-# Python 3.11. CPU only: all code passes device="cpu" explicitly. Pinned at M0 (2026-10-10).
+# Python 3.11. CPU only: all code passes device="cpu" explicitly. Versions pinned 2026-10-10.
 numpy==1.26.4
 pandas==2.1.4
 pyarrow==22.0.0

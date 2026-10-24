@@ -153,7 +153,7 @@ def direction_table(cf, S):
 
 st.title("Do Robust Counterfactuals Survive Model Multiplicity?")
 st.caption("30-day hospital readmission · Diabetes 130-US · DiCE vs. Consensus vs. ElliCE across XGBoost, "
-           "logistic regression and MLP  ·  [YOUR NAME] · [GUIDE NAME] · [COLLEGE]")
+           "logistic regression and MLP")
 st.info(DISCLAIMER, icon="ℹ️")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["1 · Overview", "2 · Models", "3 · Live counterfactuals ⭐",
@@ -247,7 +247,7 @@ with tab3:
     with left:
         st.markdown("**Patient (fixed features, excerpt)**")
         st.table(pd.DataFrame({"Value": [q.age.iloc[0], q.gender.iloc[0], q.race.iloc[0], q.diag_1.iloc[0],
-                                         int(q.number_inpatient.iloc[0]), int(q.number_diagnoses.iloc[0])]},
+                                         str(int(q.number_inpatient.iloc[0])), str(int(q.number_diagnoses.iloc[0]))]},
                               index=["Age", "Gender", "Race", "Main diagnosis group", "Inpatient visits (prior year)",
                                      "Number of diagnoses"]))
         st.markdown("**Actionable features (may change)**")

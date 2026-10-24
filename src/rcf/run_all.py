@@ -15,13 +15,13 @@ import time
 from rcf.utils import ROOT
 
 # (name, module, done-marker for the full run, done-marker for --quick)
-# --quick always reruns M1/M2 (a few minutes; training is deterministic, so saved models are reproduced bit-for-bit).
-STAGES = [("M1 data", "rcf.data.prepare", "data/processed/manifest.json", None),
-          ("M2 models", "rcf.models.train", "results/models/manifest.json", None),
-          ("M5 counterfactuals", "rcf.counterfactuals.run", "results/cfs/manifest.json", "results/cfs_small/manifest.json"),
-          ("M6 metrics", "rcf.metrics.evaluate", "results/eval/manifest.json", "results/eval_small/manifest.json"),
-          ("M6 figures", "rcf.reporting.figures", None, None),
-          ("M6 tables", "rcf.reporting.tables", None, None)]
+# --quick always reruns steps 1-2 (a few minutes; training is deterministic, so saved models are reproduced bit-for-bit).
+STAGES = [("Step 1/6 data", "rcf.data.prepare", "data/processed/manifest.json", None),
+          ("Step 2/6 models", "rcf.models.train", "results/models/manifest.json", None),
+          ("Step 3/6 counterfactuals", "rcf.counterfactuals.run", "results/cfs/manifest.json", "results/cfs_small/manifest.json"),
+          ("Step 4/6 metrics", "rcf.metrics.evaluate", "results/eval/manifest.json", "results/eval_small/manifest.json"),
+          ("Step 5/6 figures", "rcf.reporting.figures", None, None),
+          ("Step 6/6 tables", "rcf.reporting.tables", None, None)]
 
 
 def main(force=False, quick=False):

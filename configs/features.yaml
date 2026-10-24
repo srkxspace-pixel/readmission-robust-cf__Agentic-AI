@@ -1,7 +1,6 @@
-# M3 actionable-feature constraints (DESIGN D3). Everything not listed as actionable is immutable.
-# ★ M3: show this list to the guide for a sanity check.
+# Actionable-feature constraints (docs/DESIGN.md D3). Everything not listed as actionable is immutable.
 
-# Main analysis: the thesis's 4 numeric "care-process" variables (decided M0).
+# Main analysis: the thesis's 4 numeric "care-process" variables.
 actionable: [time_in_hospital, num_lab_procedures, num_procedures, num_medications]
 
 # Allowed range per actionable feature = training 1st-99th percentile, rounded outward (as in the thesis).

@@ -2,9 +2,7 @@
 
 **DiCE vs. Consensus and Rashomon-Robust Counterfactuals Across Heterogeneous Model Families**
 
-Track B (Research) · BTech final-year project · AI & Machine Learning · runs fully on **CPU**
-
-Author: [YOUR NAME] · Guide: [GUIDE NAME] · [DEPARTMENT], [COLLEGE] · [YEAR]
+A reproducible measurement study of explanation stability in clinical machine learning · runs fully on **CPU**
 
 ---
 
@@ -21,7 +19,7 @@ Author: [YOUR NAME] · Guide: [GUIDE NAME] · [DEPARTMENT], [COLLEGE] · [YEAR]
 9. [Changing settings](#9-changing-settings-configs)
 10. [Reproducibility rules](#10-reproducibility-rules)
 11. [Troubleshooting](#11-troubleshooting)
-12. [More documentation and credits](#12-more-documentation-and-credits)
+12. [Documentation and references](#12-documentation-and-references)
 13. [Final demonstration script](#13-final-demonstration-script)
 
 ---
@@ -70,18 +68,18 @@ measurement.**
 
 ```
  UCI Diabetes 130-US data (101,766 hospital encounters)
-        │  Step 1 (M1)  clean · keep first visit per patient · patient-level 80/20 split
+        │  Step 1  clean · keep first visit per patient · patient-level 80/20 split
         ▼
  69,970 patients  (train 55,976 / test 13,994, 9% readmitted)
-        │  Step 2 (M2)  train 3 model families × 5 seeds = 15 models (all within 0.02 AUC)
+        │  Step 2  train 3 model families × 5 seeds = 15 models (all within 0.02 AUC)
         ▼
  15 equally accurate models (+5 seed-only XGBoost to replicate the thesis)
-        │  Step 3 (M5)  for high-risk test patients, generate counterfactuals that may change ONLY
+        │  Step 3  for high-risk test patients, generate counterfactuals that may change ONLY
         │               4 actionable features: time in hospital, lab procedures, procedures, medications
         │               methods: DiCE · Consensus (≥80% of models agree) · ElliCE (Rashomon-robust)
         ▼
  ~74,000 counterfactuals
-        │  Step 4 (M6)  check every counterfactual on every model · stability + quality metrics
+        │  Step 4  check every counterfactual on every model · stability + quality metrics
         │               · bootstrap 95% CIs · in-sample and leave-one-family-out
         ▼
  results/eval/*.csv  →  figures/*.png  →  paper/tables/*.tex  →  tests (13 checks)
@@ -153,7 +151,7 @@ p3-readmission-robust-cf/
 │   └── *_small/              ← output of the quick preview only
 ├── figures/                  ← fig1–fig5 (PNG + PDF)
 ├── docs/                     ← research notes: gap check, design decisions, progress log
-└── paper/                    ← paper draft (paused) + auto-generated LaTeX tables
+└── paper/                    ← LaTeX tables generated from results + bibliography
 ```
 
 ---
@@ -488,14 +486,14 @@ not reused.
 
 ---
 
-## 12. More documentation and credits
+## 12. Documentation and references
 
 | File | What it explains |
 |---|---|
-| `docs/M0_REPORT.md` | prior-art check, exact thesis metric definitions, why the gap is real |
-| `docs/DESIGN.md` | every design decision and why |
-| `docs/PROGRESS.md` | milestone log with all results |
-| `docs/SPECS.md`, `docs/ARCHITECTURE.md` | original specification and architecture |
+| `docs/RESEARCH_GAP.md` | the study this extends, exact metric definitions, related work, why the gap is real |
+| `docs/DESIGN.md` | every methodological choice and why |
+| `docs/RESULTS.md` | all experiment results in detail |
+| `paper/references.bib` | full bibliography |
 
 **Data.** Diabetes 130-US Hospitals for Years 1999–2008, UCI Machine Learning Repository, id 296,
 DOI 10.24432/C5230J, license CC BY 4.0. Strack et al., *BioMed Research International*, 2014.

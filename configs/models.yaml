@@ -1,11 +1,11 @@
-# M2 model multiplicity set (DESIGN D4). Hyperparameters picked once from a small grid on a 15% validation
+# Model multiplicity set (docs/DESIGN.md D4). Hyperparameters picked once from a small grid on a 15% validation
 # split of TRAIN (test untouched), so no family is handicapped: val AUC xgb 0.657, logreg 0.657, mlp 0.661.
 seeds: [0, 1, 2, 3, 4]
-bootstrap: true        # seed s trains on its own bootstrap resample of train (decided M2)
-flag_rate: 0.35        # every model flags the top 35% of training-set scores as high-risk (decided M2)
+bootstrap: true        # seed s trains on its own bootstrap resample of train
+flag_rate: 0.35        # every model flags the top 35% of training-set scores as high-risk
 
 band:
-  primary: 0.02        # keep models with test AUC >= best - 0.02 (decided M0)
+  primary: 0.02        # keep models with test AUC >= best - 0.02
   sensitivity: 0.01
 
 xgb:
