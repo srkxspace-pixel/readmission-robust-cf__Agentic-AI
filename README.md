@@ -160,27 +160,44 @@ p3-readmission-robust-cf/
 
 | Item | Requirement |
 |---|---|
-| OS | Windows 10/11, macOS or Linux |
-| Python | **3.11** (tested with 3.11.9). Other versions are untested |
+| OS | Windows 10/11 (x64), Linux (x64 or arm64) or macOS on Apple Silicon. **Intel Macs are not supported** (PyTorch 2.9.1 has no Intel-Mac build) |
+| Git | To clone the repository (https://git-scm.com) |
+| Python | **Exactly 3.11** (tested with 3.11.9). **3.13 does not work**: the pinned numpy, pandas and scikit-learn have no 3.13 wheels. 3.12 is untested. Having a newer Python installed is fine: create the environment with `py -3.11` as shown below |
 | CPU / RAM | Any modern laptop CPU, 8 GB RAM recommended. **No GPU needed; the code never uses one** |
-| Disk | ~3 GB free (Python packages ~2.5 GB, project ~30 MB) |
-| Internet | Only for installing packages and the first-time dataset download (~3 MB) |
+| Disk | ~5 GB free during installation (~3 GB for the packages, plus pip's download cache); project ~30 MB |
+| Internet | Needed to clone, to install packages (github.com, pypi.org, files.pythonhosted.org, download.pytorch.org) and once to download the 3 MB dataset (archive.ics.uci.edu) |
+| Folder | A **short path without spaces**, such as `C:\projects`, outside OneDrive, Desktop and Documents. Windows limits paths to 260 characters and the installed packages contain long ones |
 
 ---
 
 ## 5. Setup on a new laptop (step by step)
 
-> **Verified on 2026-10-12 with a brand-new environment built only from these steps:**
-> - install took ~7 min;
+> **Verified on 2026-10-25** (Windows 11, Python 3.11.9) from a fresh clone in a brand-new environment, using
+> exactly the commands below, in order:
+> - PyTorch (CPU build) and the pinned packages installed in about 5 minutes;
 > - `pytest` passed 13/13;
-> - the quick preview ran every stage in ~8 min;
-> - recomputing the real results reproduced all 11 tables in `results/eval/` **byte-for-byte**.
-
-> Copy the project folder to the new laptop (zip it, **without** the `.venv` folders). A virtual environment
-> cannot be moved between machines; you create a new one below. If you also copy `data/` and `results/`,
-> you can show the finished results immediately, without re-running anything.
+> - the quick preview ran every stage and ended with `ALL DONE` (216 s);
+> - the demo UI started on port 8501 and rendered all 5 tabs without errors.
 >
-> Tip: keep the folder path short and simple, e.g. `C:\projects\p3-readmission-robust-cf`.
+> Separately (2026-10-12), recomputing the full-run results from the saved counterfactuals reproduced all 11
+> tables in `results/eval/` byte-for-byte. Linux and macOS are supported by the pinned wheels but were not run.
+
+> Get the project with `git clone` (below), or copy the folder (zip it **without** any `.venv` folder). A virtual
+> environment cannot be moved between machines; you create a new one below. The repository already contains the
+> trained models, results and processed data, so the tests and the demo UI work right after installation,
+> without the 2-hour full run.
+>
+> Clone into a short folder, for example:
+>
+> ```powershell
+> mkdir C:\projects
+> cd C:\projects
+> git clone https://github.com/srkxspace-pixel/readmission-robust-cf__Agentic-AI.git
+> cd readmission-robust-cf__Agentic-AI
+> ```
+>
+> Run every later command from inside this project folder. Works in PowerShell and `cmd.exe` (use `cd /d` to
+> change drive in `cmd.exe`); in Git Bash write the venv path as `.venv/Scripts/python.exe`.
 
 ### Windows (PowerShell)
 
@@ -262,11 +279,18 @@ If `results/` and `figures/` were copied with the project, everything is already
 - open the tables in `results/eval/` (CSV, opens in Excel);
 - read the summary in [Section 8](#8-key-results-from-the-full-run).
 
-### Option B: Quick preview of the whole pipeline (~3–15 minutes)
+### Option B: Quick preview of the whole pipeline (about 4–10 minutes)
 
 Runs **every step** end to end on a small sample (4 patients, 1 model per family), then runs the tests. It
-proves the project works on this laptop. It writes only to `results/cfs_small/` and `results/eval_small/`,
-so the real results are not touched.
+proves the project works on this laptop. Needs internet once, to download the 3 MB dataset into `data/raw/`.
+
+- The counterfactual and result files of the preview go to `results/cfs_small/` and `results/eval_small/`
+  (git-ignored); the full-run results in `results/cfs/`, `results/eval/` and `figures/` are not touched.
+- Steps 1–2 (data preparation and model training, ~2 minutes) always run again. They are deterministic and
+  recreate the same data and models, but rewrite those files with new timestamps, so `git status` then lists
+  `data/processed/manifest.json`, `results/models/manifest.json` and `results/models/mlp_s*.joblib` as modified.
+  This is expected; to restore the published files exactly, run:
+  `git restore data/processed results/models results/eval/models.csv`
 
 ```powershell
 .venv\Scripts\python.exe -m rcf.run_all --quick
@@ -276,9 +300,12 @@ Expected ending:
 
 ```
 === tests: pytest -q
-13 passed
-=== ALL DONE in 179s. Results: results/eval_small/*.csv, figures: results/eval_small/figures/
+.............                                                            [100%]
+13 passed in 12s
+=== ALL DONE in 264s. Results: results/eval_small/*.csv, figures: results/eval_small/figures/
 ```
+
+(Times vary by machine. Lines such as "Early stopping due to failed convergence" printed by ElliCE are normal.)
 
 The preview's numbers come from 4 patients, so they are a pipeline check, not research results.
 
@@ -326,19 +353,27 @@ Useful for explaining each step separately. Run them in this order:
 .venv\Scripts\python.exe -m streamlit run src/rcf/app.py
 ```
 
-Then open **http://localhost:8501** in a browser. Stop the server with `Ctrl+C` in the terminal.
+The terminal prints `URL: http://localhost:8501` and does **not** open a browser by itself. Open
+**http://localhost:8501** in Chrome, Edge or Firefox, and keep the terminal open. The first page load takes
+15–20 seconds (spinner "Loading data and the 15 trained models"); later loads are instant. Stop the server with
+`Ctrl+C` in the terminal.
 
-- It needs the full results (`results/` folder) to show the study pages.
-- The live tab only needs `data/processed/` and `results/models/`.
+- Run it from inside the project folder: the settings in `.streamlit/config.toml` are only read from the
+  current folder. If you see "Welcome to Streamlit! ... Email:", press Enter, stop with `Ctrl+C`, `cd` into the
+  project folder and run the command again.
+- If it says "Port 8501 is not available", close the other Streamlit window, or add `--server.port 8502` to the
+  command and open http://localhost:8502.
+- The study pages need `results/eval/` and `figures/`; the live tab needs `data/processed/`, `results/models/`,
+  `results/eval/models.csv` and `results/cfs/cohort.csv`. All of these are in the repository.
 - The app listens on this laptop only (`localhost`) and sends no telemetry (`.streamlit/config.toml`).
 
 | Tab | What it shows | Live? |
 |---|---|---|
 | **1 · Overview** | Problem, research questions, pipeline diagram, 8 headline numbers | — |
 | **2 · Models** | The 15 models (AUC, AUPRC, Brier), how often equally good models disagree | — |
-| **3 · Live counterfactuals** | Pick a patient → risk under all 15 models → **Generate**: DiCE runs on every model live, plus Consensus (τ slider) and ElliCE. A "who accepts whose recommendation" grid shows the disagreement | ✅ ~5–25 s |
+| **3 · Live counterfactuals** | Pick a patient → risk under all 15 models → **Generate**: DiCE runs on every model live, plus Consensus (τ slider) and ElliCE. A "who accepts whose recommendation" grid shows the disagreement | ✅ ~10–40 s |
 | **4 · Study results** | The figures and result tables with 95% CIs from the full run | — |
-| **5 · Run pipeline** | Button that runs the quick end-to-end pipeline with a live log, and a button for the 13 tests | ✅ ~3–8 min |
+| **5 · Run pipeline** | Button that runs the quick end-to-end pipeline with a live log, and a button for the 13 tests | ✅ ~4–10 min |
 
 See [Section 13](#13-final-demonstration-script) for what to show, in what order.
 
@@ -474,7 +509,12 @@ not reused.
 
 | Problem | Fix |
 |---|---|
+| `git clone` says "Repository not found" | The repository is private or the address is mistyped. Check the address; if the repository is private, your GitHub account must be added as a collaborator and you must be signed in to it |
+| `py -3.11` says "No suitable Python runtime found", or `pip` fails building numpy / "no matching distribution" | You do not have Python 3.11 (3.13 is not supported). Install Python 3.11 from https://www.python.org/downloads/release/python-3119/ (tick "Add to PATH"), reopen the terminal, then create the environment with `py -3.11 -m venv .venv` |
 | `py` or `python` not found / wrong version | Install Python 3.11 with "Add to PATH"; use `py -3.11 ...` on Windows |
+| `ERROR: ... No such file or directory ... long path` during `pip install` | The project folder path is too long: move or re-clone it to a short path such as `C:\projects` and recreate `.venv` |
+| macOS: `XGBoostError ... libomp.dylib` | Run `brew install libomp`, then retry |
+| `Port 8501 is not available` | Close the other Streamlit window, or add `--server.port 8502` and open http://localhost:8502 |
 | `Activate.ps1 cannot be loaded` (PowerShell) | No need to activate. Use `.venv\Scripts\python.exe ...` as shown |
 | `No module named rcf` | Run Step 6 (`pip install -e . --no-deps`) and run commands **from the project folder** |
 | `OSError: [WinError 1114] ... c10.dll` | Install the "Microsoft Visual C++ Redistributable (x64)". In your own scripts, `import torch` before sklearn/xgboost (the project already does this) |
